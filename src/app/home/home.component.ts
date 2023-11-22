@@ -21,8 +21,7 @@ export class HomeComponent implements OnInit {
 
 
   constructor(
-    private _coursesService: CoursesService,
-    private dialog: MatDialog) {
+    private _coursesService: CoursesService) {
 
   }
 
@@ -43,21 +42,6 @@ export class HomeComponent implements OnInit {
       );
 
   }
-
-  editCourse(course: Course) {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "400px";
-
-    dialogConfig.data = course;
-
-    const dialogRef = this.dialog.open(CourseDialogComponent, dialogConfig);
-
-  }
-
 }
 
 
