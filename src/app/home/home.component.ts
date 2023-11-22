@@ -33,20 +33,18 @@ export class HomeComponent implements OnInit {
   }
 
   reloadCourses() {
-    this.loadingService.loadingOn();
-
     const courses$ = this._coursesService.loadAllCourses()
       .pipe(
-        map(c => c.sort(sortCoursesBySeqNo)),
-        finalize(() => this.loadingService.loadingOff())
-      );
+        map(c => c.sort(sortCoursesBySeqNo)));
 
-    this.beginnerCourses$ = courses$
+    const loadCourses$ = this.loadingService.showLoaderUntilCompleted(courses$);
+
+    this.beginnerCourses$ = loadCourses$
       .pipe(
         map(courses => courses.filter(c => c.category === "BEGINNER"))
       );
 
-    this.advancedCourses$ = courses$
+    this.advancedCourses$ = loadCourses$
       .pipe(
         map(courses => courses.filter(c => c.category === "ADVANCED"))
       );
