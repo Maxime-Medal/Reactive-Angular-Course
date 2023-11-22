@@ -15,9 +15,9 @@ import { CoursesService } from '../Services/courses.service';
 })
 export class HomeComponent implements OnInit {
 
-  beginnerCourses: Course[];
+  beginnerCourses$: Observable<Course[]>;
 
-  advancedCourses: Course[];
+  advancedCourses$: Observable<Course[]>;
 
 
   constructor(
@@ -27,18 +27,20 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    const courses$ = this._coursesService.loadAllCourses()
+      .pipe(
+        map(c => c.sort(sortCoursesBySeqNo))
+      );
 
-    // this.http.get('/api/courses')
-    //   .subscribe(
-    //     res => {
+    this.beginnerCourses$ = courses$
+      .pipe(
+        map(courses => courses.filter(c => c.category === "BEGINNER"))
+      );
 
-    //       const courses: Course[] = res["payload"].sort(sortCoursesBySeqNo);
-
-    //       this.beginnerCourses = courses.filter(course => course.category == "BEGINNER");
-
-    //       this.advancedCourses = courses.filter(course => course.category == "ADVANCED");
-
-    //     });
+    this.advancedCourses$ = courses$
+      .pipe(
+        map(courses => courses.filter(c => c.category === "ADVANCED"))
+      );
 
   }
 
