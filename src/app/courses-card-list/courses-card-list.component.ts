@@ -9,7 +9,6 @@ import { filter, tap } from 'rxjs/operators';
   selector: 'app-courses-card-list',
   templateUrl: './courses-card-list.component.html',
   styleUrl: './courses-card-list.component.css',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoursesCardListComponent implements OnInit {
   @Input()
