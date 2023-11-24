@@ -1,0 +1,11 @@
+@if(showMessage){
+<div class="messages-container">
+    @for(error of errors; track error){
+    <div class="message">
+        {{error}}
+    </div>
+    }
+
+    <mat-icon class="close" (click)="onClose()"></mat-icon>
+</div>
+}
