@@ -8,7 +8,6 @@ import { CourseDialogComponent } from '../course-dialog/course-dialog.component'
 import { CoursesService } from '../Services/courses.service';
 import { LoadingService } from '../loading/loading.service';
 import { MessagesService } from '../messages/messages.service';
-import { error } from 'console';
 
 
 @Component({
@@ -17,11 +16,8 @@ import { error } from 'console';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  beginnerCourses$: Observable<Course[]>;
-
-  advancedCourses$: Observable<Course[]>;
-
+  public beginnerCourses$: Observable<Course[]>;
+  public advancedCourses$: Observable<Course[]>;
 
   constructor(
     private _coursesService: CoursesService,
@@ -40,7 +36,7 @@ export class HomeComponent implements OnInit {
       .pipe(
         map(c => c.sort(sortCoursesBySeqNo)),
         catchError(err => {
-          const message = "Could not loade courses";
+          const message = "Could not load courses";
           this._messageService.showErrors(message);
           console.error(message, err);
           return throwError(err); // nouvel observable envoyé
