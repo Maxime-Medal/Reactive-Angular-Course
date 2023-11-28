@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, throwError } from "rxjs";
+import { BehaviorSubject, Observable, of, throwError } from "rxjs";
 import { Course, sortCoursesBySeqNo } from "../model/course";
 import { catchError, map, tap } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
@@ -39,6 +39,10 @@ export class CoursesStore {
             )
 
         this.loadingService.showLoaderUntilCompleted(loadCourses$).subscribe();
+    }
+
+    saveCourse(courseId: string, changes: Partial<Course>): Observable<any> {
+        return of(undefined)
     }
 
     filterByCategorie(category: string): Observable<Course[]> {
