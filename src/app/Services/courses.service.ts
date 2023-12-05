@@ -9,7 +9,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class CoursesService {
-  coursesUrl = `${environment.apiUrl}/courses`;
+  // coursesUrl = `${environment.apiUrl}/courses`;
+  coursesUrl = `api/courses`;
   constructor(
     private _http: HttpClient
   ) { }

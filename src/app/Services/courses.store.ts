@@ -11,7 +11,8 @@ import { environment } from "../../environments/environment";
     providedIn: 'root'
 })
 export class CoursesStore {
-    private apiUrl = `${environment.apiUrl}/courses`;
+    // private apiUrl = `${environment.apiUrl}/courses`;
+    private apiUrl = `api/courses`;
     private subject = new BehaviorSubject<Course[]>([]);
 
     public courses$: Observable<Course[]> = this.subject.asObservable();
