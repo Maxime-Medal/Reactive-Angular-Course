@@ -12,7 +12,7 @@
     <mat-icon>search</mat-icon>
     Search
   </button>
-
+  @if(!activeLesson) {
   <ng-container *ngIf="(searchResults$ | async) as lessons">
 
     <table class="lessons-table mat-elevation-z7">
@@ -24,7 +24,7 @@
       </thead>
 
       @for (lesson of lessons; track lesson.seqNo) {
-      <tr class="lesson-row">
+      <tr class="lesson-row" (click)="openLesson(lesson)">
         <td class="seqno-cell">{{lesson.seqNo}}</td>
         <td class="description-cell">{{lesson.description}}</td>
         <td class="duration-cell">{{lesson.duration}}</td>
@@ -34,6 +34,13 @@
     </table>
   </ng-container>
 
+  } @else {
+  <button mat-raised-btn class="back-btn" (click)="backToSearch()">
+    <mat-icon>arrow_back_ios</mat-icon>
+    Back to Search
+  </button>
+  <lesson></lesson>
+  }
 
 
 </div>
