@@ -16,6 +16,13 @@ export class CoursesService {
     private _http: HttpClient
   ) { }
 
+  loadCourseById(courseId: number) {
+    return this._http.get<Course>(`/api/courses/${courseId}`)
+      .pipe(
+        shareReplay()
+      );
+  }
+
   loadAllCourses(): Observable<Course[]> {
     return this._http.get<Course[]>(this.coursesUrl)
       .pipe(

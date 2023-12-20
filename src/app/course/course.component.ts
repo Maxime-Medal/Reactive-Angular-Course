@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Course} from '../model/course';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from '../model/course';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -13,8 +13,9 @@ import {
   withLatestFrom,
   concatAll, shareReplay, catchError
 } from 'rxjs/operators';
-import {merge, fromEvent, Observable, concat, throwError} from 'rxjs';
-import {Lesson} from '../model/lesson';
+import { merge, fromEvent, Observable, concat, throwError } from 'rxjs';
+import { Lesson } from '../model/lesson';
+import { CoursesService } from '../Services/courses.service';
 
 
 @Component({
@@ -24,19 +25,22 @@ import {Lesson} from '../model/lesson';
 })
 export class CourseComponent implements OnInit {
 
-  course: Course;
+  course$: Observable<Course>;
 
-  lessons: Lesson[];
+  lessons$: Observable<Lesson[]>;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private cousesService: CoursesService
+  ) {
 
 
   }
 
   ngOnInit() {
 
-
-
+    const courseId = parseInt(this.route.snapshot.paramMap.get('courseId')); // récupération du queryParams
+    this.course$ = this.cousesService.loadCourseById(courseId);
   }
 
 
