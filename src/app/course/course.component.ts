@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../model/course';
 import {
@@ -25,7 +25,8 @@ interface CourseData {
 @Component({
   selector: 'course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.css']
+  styleUrls: ['./course.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseComponent implements OnInit {
 
@@ -36,15 +37,19 @@ export class CourseComponent implements OnInit {
     private route: ActivatedRoute,
     private cousesService: CoursesService
   ) {
-
-
   }
 
   ngOnInit() {
 
     const courseId = parseInt(this.route.snapshot.paramMap.get('courseId')); // récupération du queryParams
-    const course$ = this.cousesService.loadCourseById(courseId);
-    const lessons$ = this.cousesService.loadAllCourseLessons(courseId);
+    const course$ = this.cousesService.loadCourseById(courseId)
+      .pipe(
+        startWith(null)
+      );
+    const lessons$ = this.cousesService.loadAllCourseLessons(courseId)
+      .pipe(
+        startWith([])
+      );
 
     this.data$ = combineLatest([course$, lessons$])
       .pipe(
